@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SkeletonPlaceholderView">
+        <attr name="skeleton_color" format="color|reference"/>
+        <attr name="skeleton_background" format="color|reference"/>
+    </declare-styleable>
+</resources>
