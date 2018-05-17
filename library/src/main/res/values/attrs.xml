@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SkeletonPlaceholderView">
-        <attr name="skeleton_color" format="color|reference"/>
-        <attr name="skeleton_background" format="color|reference"/>
+        <attr name="sk_bone_color" format="color|reference"/>
+        <attr name="sk_background_color" format="color|reference"/>
+        <attr name="sk_bone_default_width" format="dimension"/>
+        <attr name="sk_bone_default_height" format="dimension"/>
     </declare-styleable>
 </resources>

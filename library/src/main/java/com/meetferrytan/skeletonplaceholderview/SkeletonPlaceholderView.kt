@@ -15,8 +15,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import android.widget.TextView
 
 class SkeletonPlaceholderView : FrameLayout {
     @JvmOverloads
@@ -39,18 +41,25 @@ class SkeletonPlaceholderView : FrameLayout {
     }
 
     private lateinit var mBoneIds: IntArray
-    @ColorInt var bgColor: Int = 0
-    @ColorInt var skeletonColor: Int = 0
+    @ColorInt
+    var bgColor: Int = 0
+    @ColorInt
+    var skeletonColor: Int = 0
+    var boneDefaultWidth: Int = 0
+    var boneDefaultHeight: Int = 0
     private lateinit var mSkeletonPaint: Paint
-    private lateinit var mBones: List<Bone>
+    private lateinit var mBones: List<Rect>
+    private var textBoneCount: Int = 0
 
-    fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int = 0) {
+    private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int = 0) {
         setWillNotDraw(false)
-        attrs?.let { attributeSet ->
-            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SkeletonPlaceholderView, defStyleAttr, defStyleRes)
+        attrs?.let {
+            val typedArray = context.obtainStyledAttributes(it, R.styleable.SkeletonPlaceholderView, defStyleAttr, defStyleRes)
 
-            bgColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_skeleton_background, ContextCompat.getColor(getContext(), R.color.background_default))
-            skeletonColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_skeleton_color, ContextCompat.getColor(getContext(), R.color.skeleton_default))
+            bgColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_background_color, ContextCompat.getColor(getContext(), R.color.background_default))
+            skeletonColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color, ContextCompat.getColor(getContext(), R.color.skeleton_default))
+            boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_width, resources.getDimensionPixelSize(R.dimen.width_default))
+            boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_height, resources.getDimensionPixelSize(R.dimen.height_default))
 
             setBackgroundColor(bgColor)
             mSkeletonPaint = Paint()
@@ -72,7 +81,7 @@ class SkeletonPlaceholderView : FrameLayout {
         }
     }
 
-    fun updatePlaceholderSize(width:Int, height:Int){
+    private fun updatePlaceholderSize(width: Int, height: Int) {
         layoutParams.width = width
         layoutParams.height = height
         setLayoutParams(layoutParams)
@@ -82,36 +91,40 @@ class SkeletonPlaceholderView : FrameLayout {
         mBones = ArrayList()
         if (view.id in mBoneIds) {
             Log.d("SPVTEST", "view is a bone: " + view.javaClass.simpleName)
+            val isWrappedTextView: Boolean
+
+            Log.d("SPVTEST", "view width is " + view.layoutParams.width)
+            isWrappedTextView = view is TextView && view.text == "" && view.layoutParams.width == WRAP_CONTENT
+
+            if (isWrappedTextView) view.layoutParams.let {
+//                textBoneCount++
+                it.width = boneDefaultWidth * 1
+                view.setLayoutParams(it)
+            }
+
             view.afterMeasured {
-                mBones += Bone(view.left, view.top, view.right, view.bottom)
+                val rect = Rect()
+                view.getGlobalVisibleRect(rect)
+                mBones += rect
             }
         } else {
             view.setBackgroundResource(R.color.transparent)
-            if (view is ViewGroup) {
-                Log.d("SPVTEST", "view is not a bone, and a viewgroup: " + view.javaClass.simpleName)
-                for (i in 0..view.childCount) {
-                    view.getChildAt(i)?.let { skeletonize(it) }
-                }
-            } else {
-                Log.d("SPVTEST", "view is not a bone: " + view.javaClass.simpleName)
+        }
+
+        if (view is ViewGroup) {
+            Log.d("SPVTEST", "view is not a bone, and a viewgroup: " + view.javaClass.simpleName)
+            for (i in 0..view.childCount) {
+                view.getChildAt(i)?.let { skeletonize(it) }
             }
+        } else {
+            Log.d("SPVTEST", "view is not a bone: " + view.javaClass.simpleName)
         }
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        skeletonColor?.let {
-            mBones.forEach {
-                canvas?.drawRect(it.createRectangle(), mSkeletonPaint)
-            }
-        }
-    }
-
-    // TODO add more variable for more dynamic mBones
-    class Bone(val left: Int = 0, val top: Int = 0, val right: Int = 0, val bottom: Int = 0) {
-        fun createRectangle(): Rect {
-            Log.d("SPVTEST", String.format("left: %d, top: %d, right: %d, bottom: %d", left, top, right, bottom))
-            return Rect(left, top, right, bottom)
+        mBones.forEach {
+            canvas?.drawRect(it, mSkeletonPaint)
         }
     }
 
