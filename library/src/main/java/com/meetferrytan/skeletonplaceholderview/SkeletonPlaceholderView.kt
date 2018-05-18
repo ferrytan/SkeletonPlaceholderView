@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.graphics.RectF
 import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
@@ -20,6 +21,7 @@ import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.TextView
 
+//TODO add documentation
 class SkeletonPlaceholderView : FrameLayout {
     @JvmOverloads
     constructor(
@@ -47,6 +49,7 @@ class SkeletonPlaceholderView : FrameLayout {
     var skeletonColor: Int = 0
     var boneDefaultWidth: Int = 0
     var boneDefaultHeight: Int = 0
+    var boneCornerRadius: Float = 0f
     private lateinit var mSkeletonPaint: Paint
     private lateinit var mBones: List<Rect>
     private var textBoneCount: Int = 0
@@ -60,6 +63,7 @@ class SkeletonPlaceholderView : FrameLayout {
             skeletonColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color, ContextCompat.getColor(getContext(), R.color.skeleton_default))
             boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_width, resources.getDimensionPixelSize(R.dimen.width_default))
             boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_height, resources.getDimensionPixelSize(R.dimen.height_default))
+            boneCornerRadius = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_corner_radius, resources.getDimensionPixelSize(R.dimen.corner_default)).toFloat()
 
             setBackgroundColor(bgColor)
             mSkeletonPaint = Paint()
@@ -68,6 +72,7 @@ class SkeletonPlaceholderView : FrameLayout {
         }
     }
 
+    //TODO create bone class to add more dynamic variables per bone
     fun setView(@LayoutRes layoutRes: Int, @IdRes vararg boneIds: Int) {
         this.mBoneIds = boneIds
 
@@ -125,7 +130,7 @@ class SkeletonPlaceholderView : FrameLayout {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         mBones.forEach {
-            canvas?.drawRect(it, mSkeletonPaint)
+            canvas?.drawRoundRect(it.createRectF(), boneCornerRadius, boneCornerRadius, mSkeletonPaint)
         }
     }
 
@@ -140,4 +145,7 @@ class SkeletonPlaceholderView : FrameLayout {
         })
     }
 
+    inline fun Rect.createRectF() : RectF{
+        return RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
+    }
 }

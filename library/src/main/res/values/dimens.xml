@@ -2,4 +2,5 @@
 <resources>
     <dimen name="width_default">72dp</dimen>
     <dimen name="height_default">12dp</dimen>
+    <dimen name="corner_default">0dp</dimen>
 </resources>
