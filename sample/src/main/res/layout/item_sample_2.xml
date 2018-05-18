@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
+    android:id="@+id/root"
     android:foreground="?android:attr/selectableItemBackground"
     android:paddingBottom="10dp">
 
@@ -95,7 +96,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imgCover"
         tools:text="Romance"/>
 
-
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
@@ -104,6 +104,7 @@
         tools:text="James And Martha"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtGenre"/>

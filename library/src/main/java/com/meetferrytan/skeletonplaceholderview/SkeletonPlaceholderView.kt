@@ -97,8 +97,9 @@ class SkeletonPlaceholderView : FrameLayout {
             isWrappedTextView = view is TextView && view.text == "" && view.layoutParams.width == WRAP_CONTENT
 
             if (isWrappedTextView) view.layoutParams.let {
+                // TODO Add logic to set higher width on next lines
 //                textBoneCount++
-                it.width = boneDefaultWidth * 1
+                it.width = boneDefaultWidth * 1 // * textBoneCount
                 view.setLayoutParams(it)
             }
 
