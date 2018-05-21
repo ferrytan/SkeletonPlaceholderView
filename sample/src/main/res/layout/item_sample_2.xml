@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/root"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/imgCover"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#bbbbbb"
+        android:scaleType="fitXY"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        android:contentDescription="@string/app_name"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imgCover"
+        android:background="#bbbbbb"/>
+
+    <FrameLayout
+        android:id="@+id/frmContainerUp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff0000"
+            android:contentDescription="@string/app_name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="up"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textSize="10sp"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frmContainerNew"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00ff00"
+            android:contentDescription="@string/app_name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="new"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textSize="7sp"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtGenre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCover"
+        tools:text="Romance"/>
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="James And Martha"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGenre"/>
+
+
+    <FrameLayout
+        android:id="@+id/frmSubscribeCount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintHeight_min="17dp"
+        android:layout_marginTop="26dp">
+
+        <TextView
+            android:id="@+id/txtSubscribeCount"
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:textSize="11sp"
+            android:gravity="center_vertical"
+            android:drawablePadding="4dp"
+            android:layout_gravity="bottom"
+            tools:text="12k Subscribers"/>
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

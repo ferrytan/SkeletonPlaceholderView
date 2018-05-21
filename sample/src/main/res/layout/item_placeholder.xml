@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shimmer_base_alpha="1"
+    app:shimmer_highlight_alpha="0.7">
+
+    <com.meetferrytan.skeletonplaceholderview.SkeletonPlaceholderView
+        android:id="@+id/skeletonPlaceholderView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sk_bone_corner_radius="4dp"/>
+</com.facebook.shimmer.ShimmerFrameLayout>

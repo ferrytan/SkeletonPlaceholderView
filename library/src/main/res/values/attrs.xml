@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SkeletonPlaceholderView">
+        <attr name="sk_bone_color" format="color|reference"/>
+        <attr name="sk_background_color" format="color|reference"/>
+        <attr name="sk_bone_default_width" format="dimension"/>
+        <attr name="sk_bone_default_height" format="dimension"/>
+        <attr name="sk_bone_corner_radius" format="dimension"/>
+    </declare-styleable>
+</resources>

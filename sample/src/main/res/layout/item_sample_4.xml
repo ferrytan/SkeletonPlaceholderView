@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:paddingBottom="16dp"
+    android:paddingStart="16dp">
+
+    <ImageView
+        android:id="@+id/imgProfilePicture"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="21dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/app_name"
+        tools:src="@mipmap/ic_launcher_round"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/imgProfilePicture"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProfilePicture"
+        app:layout_constraintEnd_toEndOf="@+id/imgProfilePicture"
+        app:layout_constraintStart_toStartOf="@+id/imgProfilePicture"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher_round"/>
+
+    <TextView
+        android:id="@+id/txvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="46dp"
+        android:layout_marginStart="12dp"
+        android:lines="1"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/imgProfilePicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imgProfilePicture"
+        tools:text="Ricardo Marsh"/>
+
+    <LinearLayout
+        android:id="@+id/linInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/txvName"
+        app:layout_constraintTop_toBottomOf="@id/txvName">
+
+        <TextView
+            android:id="@+id/txvLabelAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="#0f0"
+            android:gravity="center"
+            android:text="Author"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/txvLabelBestComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Best Comment"
+            android:textAllCaps="true"
+            android:textSize="11sp"/>
+
+        <TextView
+            android:id="@+id/txvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:textSize="11sp"
+            tools:text="1 min ago"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txvCommentText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="@id/txvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/linInfo"
+        tools:text="The purpose of your brochure may differ from business to business."
+        />
+
+    <TextView
+        android:id="@+id/txvDislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/txvCommentText"
+        tools:text="99k"/>
+
+    <TextView
+        android:id="@+id/txvLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/txvDislike"
+        app:layout_constraintTop_toTopOf="@id/txvDislike"
+        tools:text="99k"/>
+
+    <TextView
+        android:id="@+id/txvReplies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/txvCommentText"
+        app:layout_constraintTop_toTopOf="@id/txvDislike"
+        tools:text="14k REPLIES"/>
+
+    <TextView
+        android:id="@+id/txvShowAllReplies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Show All Replies"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/txvReplies"
+        app:layout_constraintTop_toBottomOf="@id/txvReplies"/>
+
+    <TextView
+        android:id="@+id/contextMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="&#8942;"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</android.support.constraint.ConstraintLayout>

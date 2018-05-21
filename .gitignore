@@ -21,7 +21,7 @@
 build/
 # which matches 'build' in any sub folder
 
- 
+
 
 # Built application files
 *.apk
@@ -83,3 +83,12 @@ Thumbs.db
 /.idea/libraries
 .idea/
 /.idea/
+
+# [Maven] ========================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
