@@ -12,7 +12,6 @@ import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,11 +94,7 @@ class SkeletonPlaceholderView : FrameLayout {
     private fun skeletonize(view: View) {
         mBones = ArrayList()
         if (view.id in mBoneIds) {
-            Log.d("SPVTEST", "view is a bone: " + view.javaClass.simpleName)
-            val isWrappedTextView: Boolean
-
-            Log.d("SPVTEST", "view width is " + view.layoutParams.width)
-            isWrappedTextView = view is TextView && view.text == "" && view.layoutParams.width == WRAP_CONTENT
+            val isWrappedTextView = view is TextView && view.text == "" && view.layoutParams.width == WRAP_CONTENT
 
             if (isWrappedTextView) view.layoutParams.let {
                 // TODO Add logic to set higher width on next lines
@@ -118,12 +113,10 @@ class SkeletonPlaceholderView : FrameLayout {
         }
 
         if (view is ViewGroup) {
-            Log.d("SPVTEST", "view is not a bone, and a viewgroup: " + view.javaClass.simpleName)
             for (i in 0..view.childCount) {
                 view.getChildAt(i)?.let { skeletonize(it) }
             }
         } else {
-            Log.d("SPVTEST", "view is not a bone: " + view.javaClass.simpleName)
         }
     }
 
@@ -145,7 +138,7 @@ class SkeletonPlaceholderView : FrameLayout {
         })
     }
 
-    inline fun Rect.createRectF() : RectF{
+    fun Rect.createRectF() : RectF{
         return RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
     }
 }
