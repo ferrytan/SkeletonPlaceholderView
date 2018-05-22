@@ -12,7 +12,6 @@ import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,15 +72,12 @@ class SkeletonPlaceholderView : FrameLayout {
 
     //TODO create bone class to add more dynamic variables per bone
     fun <B : Bone> setView(@LayoutRes layoutRes: Int, @IdRes vararg bones: B) {
-        Log.d("test", "setView")
         mBones = bones.toMutableList()
         val view = LayoutInflater.from(context).inflate(layoutRes, this, false)
-        Log.d("test", "add skin view")
         addView(view)
         skeletonize(view)
 
         view.afterMeasured {
-            Log.d("test", "view measured")
             removeView(view)
             mViewSkinned = true
             updatePlaceholderSize(view.width, view.height)
@@ -95,11 +91,9 @@ class SkeletonPlaceholderView : FrameLayout {
     }
 
     private fun skeletonize(view: View) {
-        Log.d("test", "start skeletonize")
         view.setBackgroundResource(R.color.transparent)
         val bone = mBones.getBoneById(view.id)
         bone?.let {
-            Log.d("test", "Bone with id " + view.id + " found")
             val isWrappedTextView = view is TextView && view.text == "" && view.layoutParams.width == WRAP_CONTENT
 
             if (isWrappedTextView) view.layoutParams.let {
@@ -113,7 +107,6 @@ class SkeletonPlaceholderView : FrameLayout {
 
                 when (it) {
                     is CircleBone -> {
-                        Log.d("test", "Bone is CircleBone")
                         it.centerX = (rect.left + (rect.right - rect.left) / 2).toFloat()
                         it.centerY = (rect.top + (rect.bottom - rect.top) / 2).toFloat()
 
@@ -122,7 +115,6 @@ class SkeletonPlaceholderView : FrameLayout {
                         it.radius = minOf(rectWidth, rectHeight).toFloat() / 2 - it.hSpacing
                     }
                     is RectBone -> {
-                        Log.d("test", "Bone is RectBone")
 
                         if(it.customWidth >= 0) rect.right = rect.left + it.customWidth
                         if(it.customHeight >= 0) rect.bottom = rect.top + it.customHeight
@@ -136,7 +128,6 @@ class SkeletonPlaceholderView : FrameLayout {
                         if (it.cornerRadius == -1f) it.cornerRadius = boneDefaultCornerRadius
                     }
                     else -> {
-                        Log.d("test", "Bone is invalid type")
                         // should not be possible
                     }
                 }
