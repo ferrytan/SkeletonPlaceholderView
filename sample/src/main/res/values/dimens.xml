@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radius2dp">2dp</dimen>
+    <dimen name="radius4dp">4dp</dimen>
+    <dimen name="radius8dp">8dp</dimen>
+    <dimen name="spacing1dp">1dp</dimen>
+</resources>

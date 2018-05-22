@@ -12,5 +12,5 @@
         android:id="@+id/skeletonPlaceholderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:sk_bone_corner_radius="4dp"/>
+        app:sk_bone_corner_radius="@dimen/radius2dp"/>
 </com.facebook.shimmer.ShimmerFrameLayout>

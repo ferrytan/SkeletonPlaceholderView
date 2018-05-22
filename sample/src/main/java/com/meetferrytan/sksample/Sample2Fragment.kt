@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.meetferrytan.skeletonplaceholderview.SkeletonPlaceholderView
 import kotlinx.android.synthetic.main.item_placeholder.view.*
 import kotlinx.android.synthetic.main.item_sample_2.view.*
 
@@ -19,7 +20,10 @@ class Sample2Fragment : Fragment() {
         view.txtSubscribeCount.text = "12k Subscribers"
 
         view.skeletonPlaceholderView.setView(R.layout.item_sample_2,
-                R.id.imgCover, R.id.txtGenre, R.id.txtTitle, R.id.frmSubscribeCount)
+                SkeletonPlaceholderView.RectBone(R.id.imgCover, cornerRadius = 0f),
+                SkeletonPlaceholderView.RectBone(R.id.txtGenre),
+                SkeletonPlaceholderView.RectBone(R.id.txtTitle),
+                SkeletonPlaceholderView.RectBone(R.id.frmSubscribeCount))
         view.shimmer.startShimmer()
 
         return view
