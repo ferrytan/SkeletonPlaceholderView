@@ -42,7 +42,7 @@ class SkeletonPlaceholderView : FrameLayout {
     }
 
     @ColorInt
-    var bgColor: Int = 0
+    var rootBackgroundColor: Int = 0
     @ColorInt
     var skeletonColor: Int = 0
     var boneDefaultWidth: Int = 0
@@ -57,20 +57,20 @@ class SkeletonPlaceholderView : FrameLayout {
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.SkeletonPlaceholderView, defStyleAttr, defStyleRes)
 
-            bgColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_background_color, ContextCompat.getColor(getContext(), R.color.background_default))
+            rootBackgroundColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_background_color, ContextCompat.getColor(getContext(), R.color.background_default))
             skeletonColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color, ContextCompat.getColor(getContext(), R.color.skeleton_default))
             boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_width, resources.getDimensionPixelSize(R.dimen.width_default))
             boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_height, resources.getDimensionPixelSize(R.dimen.height_default))
             boneDefaultCornerRadius = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_corner_radius, resources.getDimensionPixelSize(R.dimen.corner_default)).toFloat()
 
-            setBackgroundColor(bgColor)
+            setBackgroundColor(rootBackgroundColor)
             mSkeletonPaint = Paint()
             mSkeletonPaint.color = skeletonColor
             typedArray.recycle()
         }
     }
 
-    fun <B: Bone> setView(@LayoutRes layoutRes: Int, vararg bones: B){
+    fun <B : Bone> setView(@LayoutRes layoutRes: Int, vararg bones: B) {
         mBones = bones.toMutableList()
         val view = LayoutInflater.from(context).inflate(layoutRes, this, false)
         addView(view)
@@ -197,7 +197,7 @@ class SkeletonPlaceholderView : FrameLayout {
 
     private fun Rect.createRectF(): RectF = RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
 
-    abstract class Bone (@IdRes val viewId: Int, var customWidth: Int = -1, var customHeight: Int = -1, var hSpacing: Int = 0, var vSpacing: Int = 0)
+    abstract class Bone(@IdRes val viewId: Int, var customWidth: Int = -1, var customHeight: Int = -1, var hSpacing: Int = 0, var vSpacing: Int = 0)
 
     class CircleBone : Bone {
         var centerX: Float = 0f
@@ -209,7 +209,7 @@ class SkeletonPlaceholderView : FrameLayout {
                     centerX: Float = 0f,
                     centerY: Float = 0f,
                     radius: Float = 0f)
-                : super(viewId = viewId, hSpacing = spacing, vSpacing = spacing){
+                : super(viewId = viewId, hSpacing = spacing, vSpacing = spacing) {
             this.centerX = centerX
             this.centerY = centerY
             this.radius = radius
@@ -229,7 +229,7 @@ class SkeletonPlaceholderView : FrameLayout {
                     vSpacing: Int = 0,
                     rect: Rect? = null,
                     cornerRadius: Float = -1f)
-                : super(viewId = viewId, customWidth = customWidth, customHeight = customHeight, hSpacing = hSpacing, vSpacing = vSpacing){
+                : super(viewId = viewId, customWidth = customWidth, customHeight = customHeight, hSpacing = hSpacing, vSpacing = vSpacing) {
             this.rect = rect
             this.cornerRadius = cornerRadius
         }
