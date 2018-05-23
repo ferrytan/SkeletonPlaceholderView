@@ -116,13 +116,13 @@ class SkeletonPlaceholderView : FrameLayout {
                     }
                     is RectBone -> {
 
-                        if(it.customWidth >= 0) rect.right = rect.left + it.customWidth
-                        if(it.customHeight >= 0) rect.bottom = rect.top + it.customHeight
+                        if (it.customWidth >= 0) rect.right = rect.left + it.customWidth
+                        if (it.customHeight >= 0) rect.bottom = rect.top + it.customHeight
 
-                        rect.left+=it.hSpacing
-                        rect.top+=it.vSpacing
-                        rect.right-=it.hSpacing
-                        rect.bottom-=it.vSpacing
+                        rect.left += it.hSpacing
+                        rect.top += it.vSpacing
+                        rect.right -= it.hSpacing
+                        rect.bottom -= it.vSpacing
 
                         it.rect = rect
                         if (it.cornerRadius == -1f) it.cornerRadius = boneDefaultCornerRadius
@@ -191,24 +191,45 @@ class SkeletonPlaceholderView : FrameLayout {
         if (boneIndex in indices) set(boneIndex, updatedBone)
     }
 
-
     private fun Rect.createRectF(): RectF = RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
 
-    abstract class Bone(@IdRes val viewId: Int, var customWidth: Int = -1, var customHeight: Int = -1, var hSpacing: Int = 0, var vSpacing: Int = 0)
+    abstract class Bone (@IdRes val viewId: Int, var customWidth: Int = -1, var customHeight: Int = -1, var hSpacing: Int = 0, var vSpacing: Int = 0)
 
-    class CircleBone(@IdRes viewId: Int,
-                     spacing: Int = 0,
-                     var centerX: Float = 0f,
-                     var centerY: Float = 0f,
-                     var radius: Float = 0f)
-        : Bone(viewId = viewId, hSpacing = spacing, vSpacing = spacing)
+    class CircleBone : Bone {
+        var centerX: Float = 0f
+        var centerY: Float = 0f
+        var radius: Float = 0f
 
-    class RectBone(@IdRes viewId: Int,
-                   customWidth: Int = -1,
-                   customHeight: Int = -1,
-                   hSpacing: Int = 0,
-                   vSpacing: Int = 0,
-                   var rect: Rect? = null,
-                   var cornerRadius: Float = -1f)
-        : Bone(viewId = viewId, customWidth = customWidth, customHeight = customHeight, hSpacing = hSpacing, vSpacing = vSpacing)
+        constructor(@IdRes viewId: Int,
+                    spacing: Int = 0,
+                    centerX: Float = 0f,
+                    centerY: Float = 0f,
+                    radius: Float = 0f)
+                : super(viewId = viewId, hSpacing = spacing, vSpacing = spacing){
+            this.centerX = centerX
+            this.centerY = centerY
+            this.radius = radius
+        }
+
+        constructor(@IdRes viewId: Int) : super(viewId = viewId)
+    }
+
+    class RectBone : Bone {
+        var rect: Rect? = null
+        var cornerRadius: Float = -1f
+
+        constructor(@IdRes viewId: Int,
+                    customWidth: Int = -1,
+                    customHeight: Int = -1,
+                    hSpacing: Int = 0,
+                    vSpacing: Int = 0,
+                    rect: Rect? = null,
+                    cornerRadius: Float = -1f)
+                : super(viewId = viewId, customWidth = customWidth, customHeight = customHeight, hSpacing = hSpacing, vSpacing = vSpacing){
+            this.rect = rect
+            this.cornerRadius = cornerRadius
+        }
+
+        constructor(@IdRes viewId: Int) : super(viewId)
+    }
 }
