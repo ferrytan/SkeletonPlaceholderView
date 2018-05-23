@@ -70,8 +70,7 @@ class SkeletonPlaceholderView : FrameLayout {
         }
     }
 
-    //TODO create bone class to add more dynamic variables per bone
-    fun <B : Bone> setView(@LayoutRes layoutRes: Int, @IdRes vararg bones: B) {
+    fun <B: Bone> setView(@LayoutRes layoutRes: Int, vararg bones: B){
         mBones = bones.toMutableList()
         val view = LayoutInflater.from(context).inflate(layoutRes, this, false)
         addView(view)
@@ -82,6 +81,11 @@ class SkeletonPlaceholderView : FrameLayout {
             mViewSkinned = true
             updatePlaceholderSize(view.width, view.height)
         }
+    }
+
+    fun setView(@LayoutRes layoutRes: Int, @IdRes vararg bones: Int) {
+        val defaultBones: Array<Bone> = bones.map { RectBone(it) }.toTypedArray()
+        setView(layoutRes, *defaultBones)
     }
 
     private fun updatePlaceholderSize(width: Int, height: Int) {
