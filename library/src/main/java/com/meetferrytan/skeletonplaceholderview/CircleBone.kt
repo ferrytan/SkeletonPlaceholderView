@@ -7,7 +7,7 @@ class CircleBone : Bone {
     var centerY: Float = 0f
     var radius: Float = 0f
 
-    constructor(@IdRes viewId: Int,
+    private constructor(@IdRes viewId: Int,
                 spacing: Int = 0,
                 centerX: Float = 0f,
                 centerY: Float = 0f,
@@ -23,34 +23,18 @@ class CircleBone : Bone {
     // Builder Pattern for Java interopability
     private constructor(builder: Builder) : this(
             viewId = builder.viewId,
-            spacing = builder.spacing,
-            centerX = builder.centerX,
-            centerY = builder.centerY,
-            radius = builder.radius
+            spacing = builder.spacing
     )
 
     companion object {
         inline fun build(@IdRes viewId: Int, block: Builder.() -> Unit) = Builder(viewId).apply(block).build()
     }
 
-    class Builder (@IdRes val viewId: Int){
+    class Builder (@IdRes internal val viewId: Int){
 
-        var spacing: Int = 0
-            private set
-        var centerX: Float = 0f
-            private set
-        var centerY: Float = 0f
-            private set
-        var radius: Float = 0f
-            private set
+        internal var spacing: Int = 0
 
         fun spacing(spacing: Int) = apply { this.spacing = spacing }
-
-        fun centerX(centerX: Float) = apply { this.centerX = centerX }
-
-        fun centerY(centerY: Float) = apply { this.centerY = centerY }
-
-        fun radius(radius: Float) = apply { this.radius = radius }
 
         fun build() = CircleBone(this)
 

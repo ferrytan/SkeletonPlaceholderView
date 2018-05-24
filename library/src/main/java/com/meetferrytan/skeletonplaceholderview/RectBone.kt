@@ -7,7 +7,7 @@ class RectBone : Bone {
     var rect: Rect? = null
     var cornerRadius: Float = -1f
 
-    constructor(@IdRes viewId: Int,
+    private constructor(@IdRes viewId: Int,
                 customWidth: Int = -1,
                 customHeight: Int = -1,
                 hSpacing: Int = 0,
@@ -32,33 +32,23 @@ class RectBone : Bone {
             customHeight = builder.customHeight,
             hSpacing = builder.hSpacing,
             vSpacing = builder.vSpacing,
-            rect = builder.rect,
             cornerRadius = builder.cornerRadius
     )
 
-    class Builder(@IdRes val viewId: Int) {
-        var customWidth: Int = -1
-            private set
-        var customHeight: Int = -1
-            private set
-        var hSpacing: Int = 0
-            private set
-        var vSpacing: Int = 0
-            private set
-        var rect: Rect? = null
-            private set
-        var cornerRadius: Float = -1f
-            private set
+    class Builder(@IdRes internal val viewId: Int) {
+        internal var customWidth: Int = -1
+        internal var customHeight: Int = -1
+        internal var hSpacing: Int = 0
+        internal var vSpacing: Int = 0
+        internal var cornerRadius: Float = -1f
 
         fun customWidth(customWidth: Int) = apply { this.customWidth = customWidth }
 
         fun customHeight(customHeight: Int) = apply { this.customHeight = customHeight }
 
-        fun hSpacing(hSpacing: Int) = apply { this.hSpacing = hSpacing }
+        fun horizontalSpacing(hSpacing: Int) = apply { this.hSpacing = hSpacing }
 
-        fun vSpacing(vSpacing: Int) = apply { this.vSpacing = vSpacing }
-
-        fun rect(rect: Rect?) = apply { this.rect = rect }
+        fun verticalSpacing(vSpacing: Int) = apply { this.vSpacing = vSpacing }
 
         fun cornerRadius(cornerRadius: Float) = apply { this.cornerRadius = cornerRadius }
 
