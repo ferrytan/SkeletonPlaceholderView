@@ -18,7 +18,7 @@ class Sample1Fragment : Fragment() {
         view.subtitle.text = "Subtitle (cornerRadius=4dp)"
         view.description.text = "Description (cornerRadius=8dp, customHeight=100)"
 
-        view.skeletonPlaceholderView.setView(R.layout.item_sample_1,
+        view.skeletonPlaceholderView.skinView(R.layout.item_sample_1,
                 RectBone(R.id.img),
                 RectBone.Builder(R.id.title)
                         .cornerRadius(resources.getDimensionPixelSize(R.dimen.radius2dp).toFloat())

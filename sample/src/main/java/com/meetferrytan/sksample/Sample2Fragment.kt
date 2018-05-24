@@ -18,7 +18,7 @@ class Sample2Fragment : Fragment() {
         view.txtTitle.text = "Heartbeat"
         view.txtSubscribeCount.text = "12k Subscribers"
 
-        view.skeletonPlaceholderView.setView(R.layout.item_sample_2,
+        view.skeletonPlaceholderView.skinView(R.layout.item_sample_2,
                 R.id.imgCover,
                 R.id.txtGenre,
                 R.id.txtTitle,

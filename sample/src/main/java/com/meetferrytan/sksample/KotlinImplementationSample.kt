@@ -49,7 +49,7 @@ private fun rectBoneByBuilderDsl(): RectBone {
 private fun skeletonPlaceholderView(context: Context) {
     val skeletonPlaceholderView = SkeletonPlaceholderView(context)
 
-    skeletonPlaceholderView.setView(R.layout.item_sample_2,
+    skeletonPlaceholderView.skinView(R.layout.item_sample_2,
             R.id.imgCover,
             R.id.txtGenre,
             R.id.txtTitle,
@@ -57,7 +57,7 @@ private fun skeletonPlaceholderView(context: Context) {
 
     // OR
 
-    skeletonPlaceholderView.setView(R.layout.item_sample_2,
+    skeletonPlaceholderView.skinView(R.layout.item_sample_2,
             circleBone(),
             rectBone(),
             circleBoneByBuilder(),
@@ -65,7 +65,7 @@ private fun skeletonPlaceholderView(context: Context) {
 
     // OR
 
-    skeletonPlaceholderView.setView(R.layout.item_sample_2,
+    skeletonPlaceholderView.skinView(R.layout.item_sample_2,
             CircleBone(R.id.imgCover),
             RectBone.Builder(R.id.txtGenre)
                     .customWidth(200)
