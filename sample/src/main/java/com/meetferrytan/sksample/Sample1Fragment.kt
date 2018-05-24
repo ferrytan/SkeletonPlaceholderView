@@ -19,10 +19,16 @@ class Sample1Fragment : Fragment() {
         view.description.text = "Description (cornerRadius=8dp, customHeight=100)"
 
         view.skeletonPlaceholderView.setView(R.layout.item_sample_1,
-                RectBone(viewId = R.id.img, cornerRadius = 0f),
-                RectBone(viewId = R.id.title, cornerRadius = resources.getDimensionPixelSize(R.dimen.radius2dp).toFloat()),
-                RectBone(viewId = R.id.subtitle, cornerRadius = resources.getDimensionPixelSize(R.dimen.radius4dp).toFloat()),
-                RectBone(viewId = R.id.description, cornerRadius = resources.getDimensionPixelSize(R.dimen.radius8dp).toFloat(), customHeight = 100))
+                RectBone(R.id.img),
+                RectBone.Builder(R.id.title)
+                        .cornerRadius(resources.getDimensionPixelSize(R.dimen.radius2dp).toFloat())
+                        .build(),
+                RectBone.Builder(R.id.subtitle)
+                        .cornerRadius(resources.getDimensionPixelSize(R.dimen.radius4dp).toFloat())
+                        .build(),
+                RectBone.Builder(R.id.description)
+                        .cornerRadius(resources.getDimensionPixelSize(R.dimen.radius8dp).toFloat())
+                        .build())
         view.shimmer.startShimmer()
 
         return view

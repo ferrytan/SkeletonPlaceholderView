@@ -22,10 +22,22 @@ class Sample3Fragment : Fragment() {
         view.txvLikeCount.text = "9k Likes"
 
         view.skeletonPlaceholderView.setView(R.layout.item_sample_3,
-                RectBone(R.id.imgThumb),
-                RectBone(R.id.txvEpisode, customWidth = 100, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)),
-                RectBone(R.id.txvTitle, customWidth = 200, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)),
-                RectBone(R.id.txvDate, customWidth = 300, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)))
+                RectBone.Builder(R.id.imgThumb).cornerRadius(0f).build(),
+                RectBone.Builder(R.id.txvEpisode)
+                        .apply {
+                            customWidth(100)
+                            verticalSpacing(resources.getDimensionPixelSize(R.dimen.spacing1dp))
+                        }.build(),
+                RectBone.Builder(R.id.txvTitle)
+                        .apply {
+                            customWidth(200)
+                            verticalSpacing(resources.getDimensionPixelSize(R.dimen.spacing1dp))
+                        }.build(),
+                RectBone.Builder(R.id.txvDate)
+                        .apply {
+                            customWidth(300)
+                            verticalSpacing(resources.getDimensionPixelSize(R.dimen.spacing1dp))
+                        }.build())
         view.shimmer.startShimmer()
 
         return view
