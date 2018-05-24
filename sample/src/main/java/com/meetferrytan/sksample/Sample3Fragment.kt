@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.meetferrytan.skeletonplaceholderview.SkeletonPlaceholderView
+import com.meetferrytan.skeletonplaceholderview.RectBone
 import kotlinx.android.synthetic.main.item_placeholder.view.*
 import kotlinx.android.synthetic.main.item_sample_3.view.*
 
@@ -22,10 +22,10 @@ class Sample3Fragment : Fragment() {
         view.txvLikeCount.text = "9k Likes"
 
         view.skeletonPlaceholderView.setView(R.layout.item_sample_3,
-                SkeletonPlaceholderView.RectBone(R.id.imgThumb),
-                SkeletonPlaceholderView.RectBone(R.id.txvEpisode, customWidth = 100, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)),
-                SkeletonPlaceholderView.RectBone(R.id.txvTitle, customWidth = 200, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)),
-                SkeletonPlaceholderView.RectBone(R.id.txvDate, customWidth = 300, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)))
+                RectBone(R.id.imgThumb),
+                RectBone(R.id.txvEpisode, customWidth = 100, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)),
+                RectBone(R.id.txvTitle, customWidth = 200, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)),
+                RectBone(R.id.txvDate, customWidth = 300, vSpacing = resources.getDimensionPixelSize(R.dimen.spacing1dp)))
         view.shimmer.startShimmer()
 
         return view

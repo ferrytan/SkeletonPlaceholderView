@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.meetferrytan.skeletonplaceholderview.SkeletonPlaceholderView
+import com.meetferrytan.skeletonplaceholderview.CircleBone
+import com.meetferrytan.skeletonplaceholderview.RectBone
 import kotlinx.android.synthetic.main.item_placeholder.view.*
 import kotlinx.android.synthetic.main.item_sample_4.view.*
 
@@ -23,10 +24,10 @@ class Sample4Fragment : Fragment() {
         view.txvLike.text = "1k"
         view.txvReplies.text = "120 Replies"
         view.skeletonPlaceholderView.setView(R.layout.item_sample_4,
-                SkeletonPlaceholderView.CircleBone(R.id.imgProfilePicture),
-                SkeletonPlaceholderView.RectBone(R.id.txvName),
-                SkeletonPlaceholderView.RectBone(R.id.txvLabelAuthor),
-                SkeletonPlaceholderView.RectBone(R.id.txvCommentText))
+                CircleBone(R.id.imgProfilePicture),
+                RectBone(R.id.txvName),
+                RectBone(R.id.txvLabelAuthor),
+                RectBone(R.id.txvCommentText))
         view.shimmer.startShimmer()
 
         return view

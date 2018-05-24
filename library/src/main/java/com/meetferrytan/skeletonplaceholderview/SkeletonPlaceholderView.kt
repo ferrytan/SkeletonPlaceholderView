@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.graphics.RectF
 import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
@@ -16,7 +15,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.TextView
 
@@ -50,24 +48,39 @@ class SkeletonPlaceholderView : FrameLayout {
     var boneDefaultCornerRadius: Float = 0f
     private lateinit var mSkeletonPaint: Paint
     private lateinit var mBones: MutableList<Bone>
-    private var mViewSkinned: Boolean = false;
+    private var mViewSkinned: Boolean = false
 
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int = 0) {
         setWillNotDraw(false)
-        attrs?.let {
-            val typedArray = context.obtainStyledAttributes(it, R.styleable.SkeletonPlaceholderView, defStyleAttr, defStyleRes)
 
-            rootBackgroundColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_background_color, ContextCompat.getColor(getContext(), R.color.background_default))
-            skeletonColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color, ContextCompat.getColor(getContext(), R.color.skeleton_default))
-            boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_width, resources.getDimensionPixelSize(R.dimen.width_default))
-            boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_height, resources.getDimensionPixelSize(R.dimen.height_default))
-            boneDefaultCornerRadius = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_corner_radius, resources.getDimensionPixelSize(R.dimen.corner_default)).toFloat()
+        val defRootBackgroundColor = ContextCompat.getColor(getContext(), R.color.background_default)
+        val defSkeletonColor = ContextCompat.getColor(getContext(), R.color.skeleton_default)
+        val defBoneDefaultWidth = resources.getDimensionPixelSize(R.dimen.width_default)
+        val defBoneDefaultHeight = resources.getDimensionPixelSize(R.dimen.height_default)
+        val defBoneDefaultCornerRadius = resources.getDimensionPixelSize(R.dimen.corner_default)
 
-            setBackgroundColor(rootBackgroundColor)
-            mSkeletonPaint = Paint()
-            mSkeletonPaint.color = skeletonColor
-            typedArray.recycle()
+        if (attrs != null) {
+            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SkeletonPlaceholderView, defStyleAttr, defStyleRes)
+            try {
+                rootBackgroundColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_background_color, defRootBackgroundColor)
+                skeletonColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color, defSkeletonColor)
+                boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_width, defBoneDefaultWidth)
+                boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_height, defBoneDefaultHeight)
+                boneDefaultCornerRadius = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_corner_radius, defBoneDefaultCornerRadius).toFloat()
+            } finally {
+                typedArray.recycle()
+            }
+        } else {
+            rootBackgroundColor = defRootBackgroundColor
+            skeletonColor = defSkeletonColor
+            boneDefaultWidth = defBoneDefaultWidth
+            boneDefaultHeight = defBoneDefaultHeight
+            boneDefaultCornerRadius = defBoneDefaultCornerRadius.toFloat()
         }
+
+        mSkeletonPaint = Paint()
+        mSkeletonPaint.color = skeletonColor
+        setBackgroundColor(rootBackgroundColor)
     }
 
     fun <B : Bone> setView(@LayoutRes layoutRes: Int, vararg bones: B) {
@@ -132,7 +145,7 @@ class SkeletonPlaceholderView : FrameLayout {
                         if (it.cornerRadius == -1f) it.cornerRadius = boneDefaultCornerRadius
                     }
                     else -> {
-                        // should not be possible
+                        // Unhandled type
                     }
                 }
                 mBones.updateBone(view.id, it)
@@ -154,86 +167,10 @@ class SkeletonPlaceholderView : FrameLayout {
                     is CircleBone -> canvas?.drawCircle(it.centerX, it.centerY, it.radius, mSkeletonPaint)
                     is RectBone -> canvas?.drawRoundRect(it.rect?.createRectF(), it.cornerRadius, it.cornerRadius, mSkeletonPaint)
                     else -> {
-                        // should not be possible
+                        // Unhandled type
                     }
                 }
             }
         }
-    }
-
-    private inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (measuredWidth > 0 && measuredHeight > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        })
-    }
-
-    private fun List<Bone>.getBoneById(viewId: Int): Bone? {
-        return run value@{
-            forEach {
-                when (it.viewId) {viewId -> return@value it
-                }
-            }
-            return@value null
-        }
-    }
-
-    private fun MutableList<Bone>.updateBone(viewId: Int, updatedBone: Bone) {
-        val boneIndex = run value@{
-            for (i in indices) {
-                get(i).let {
-                    if (it.viewId == viewId) return@value i
-                }
-            }
-            return@value -1
-        }
-
-        if (boneIndex in indices) set(boneIndex, updatedBone)
-    }
-
-    private fun Rect.createRectF(): RectF = RectF(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat())
-
-    abstract class Bone(@IdRes val viewId: Int, var customWidth: Int = -1, var customHeight: Int = -1, var hSpacing: Int = 0, var vSpacing: Int = 0)
-
-    class CircleBone : Bone {
-        var centerX: Float = 0f
-        var centerY: Float = 0f
-        var radius: Float = 0f
-
-        constructor(@IdRes viewId: Int,
-                    spacing: Int = 0,
-                    centerX: Float = 0f,
-                    centerY: Float = 0f,
-                    radius: Float = 0f)
-                : super(viewId = viewId, hSpacing = spacing, vSpacing = spacing) {
-            this.centerX = centerX
-            this.centerY = centerY
-            this.radius = radius
-        }
-
-        constructor(@IdRes viewId: Int) : super(viewId = viewId)
-    }
-
-    class RectBone : Bone {
-        var rect: Rect? = null
-        var cornerRadius: Float = -1f
-
-        constructor(@IdRes viewId: Int,
-                    customWidth: Int = -1,
-                    customHeight: Int = -1,
-                    hSpacing: Int = 0,
-                    vSpacing: Int = 0,
-                    rect: Rect? = null,
-                    cornerRadius: Float = -1f)
-                : super(viewId = viewId, customWidth = customWidth, customHeight = customHeight, hSpacing = hSpacing, vSpacing = vSpacing) {
-            this.rect = rect
-            this.cornerRadius = cornerRadius
-        }
-
-        constructor(@IdRes viewId: Int) : super(viewId)
     }
 }
