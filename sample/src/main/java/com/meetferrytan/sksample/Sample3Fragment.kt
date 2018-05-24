@@ -21,7 +21,7 @@ class Sample3Fragment : Fragment() {
         view.txvDate.text = "18 May 2018(w=300, vs=1)"
         view.txvLikeCount.text = "9k Likes"
 
-        view.skeletonPlaceholderView.setView(R.layout.item_sample_3,
+        view.skeletonPlaceholderView.skinView(R.layout.item_sample_3,
                 RectBone.Builder(R.id.imgThumb).cornerRadius(0f).build(),
                 RectBone.Builder(R.id.txvEpisode)
                         .apply {

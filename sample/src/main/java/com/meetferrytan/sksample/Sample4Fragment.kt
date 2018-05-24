@@ -23,7 +23,7 @@ class Sample4Fragment : Fragment() {
         view.txvDislike.text = "23"
         view.txvLike.text = "1k"
         view.txvReplies.text = "120 Replies"
-        view.skeletonPlaceholderView.setView(R.layout.item_sample_4,
+        view.skeletonPlaceholderView.skinView(R.layout.item_sample_4,
                 CircleBone(R.id.imgProfilePicture),
                 RectBone(R.id.txvName),
                 RectBone(R.id.txvLabelAuthor),

@@ -35,7 +35,7 @@ public class JavaImplementationSample {
     private void skeletonPlaceholderView(Context context) {
         SkeletonPlaceholderView skeletonPlaceholderView = new SkeletonPlaceholderView(context);
 
-        skeletonPlaceholderView.setView(R.layout.item_sample_2,
+        skeletonPlaceholderView.skinView(R.layout.item_sample_2,
                 R.id.imgCover,
                 R.id.txtGenre,
                 R.id.txtTitle,
@@ -43,7 +43,7 @@ public class JavaImplementationSample {
 
         // OR
 
-        skeletonPlaceholderView.setView(R.layout.item_sample_2,
+        skeletonPlaceholderView.skinView(R.layout.item_sample_2,
                 circleBone(),
                 rectBone(),
                 circleBoneByBuilder(),
@@ -51,7 +51,7 @@ public class JavaImplementationSample {
 
         // OR
 
-        skeletonPlaceholderView.setView(R.layout.item_sample_2,
+        skeletonPlaceholderView.skinView(R.layout.item_sample_2,
                 new CircleBone(R.id.imgCover),
                 new RectBone.Builder(R.id.txtGenre)
                         .customWidth(200)
