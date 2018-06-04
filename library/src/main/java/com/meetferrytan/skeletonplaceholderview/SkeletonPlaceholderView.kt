@@ -33,7 +33,7 @@ import android.widget.TextView
  * @property mViewSkinned the indicator flag to define whether the View is already skinned to a skeleton
  *
  * @author ferrytan
- * @version 0.2.2, 24 May 2018
+ * @version 0.2.3, 04 June 2018
  */
 class SkeletonPlaceholderView : FrameLayout {
 
