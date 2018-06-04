@@ -24,11 +24,11 @@ import android.widget.TextView
  * It is usually used as a Placeholder while loading a data before it is populated to a View.
  *
  * @property rootBackgroundColor the skeleton's root background color
- * @property boneColor the bone's color
+ * @property boneDefaultColor the bone's color
  * @property boneDefaultWidth the bone's default width if it has no width to be measured
  * @property boneDefaultHeight the bone's default width if it has no height to be measured
  * @property boneDefaultCornerRadius the bone's default corner radius for [RectBone]
- * @property mBonePaint the paint to draw the Skeleton's bones
+ * @property mPaint the paint object to draw the Skeleton's bones
  * @property mBones list of the bones to be drawn inside the Skeleton
  * @property mViewSkinned the indicator flag to define whether the View is already skinned to a skeleton
  *
@@ -65,14 +65,13 @@ class SkeletonPlaceholderView : FrameLayout {
     @ColorInt
     var rootBackgroundColor: Int = 0
     @ColorInt
-    var boneColor: Int = 0
+    var boneDefaultColor: Int = 0
     var boneDefaultWidth: Int = 0
     var boneDefaultHeight: Int = 0
     var boneDefaultCornerRadius: Float = 0f
-    private lateinit var mBonePaint: Paint
     private lateinit var mBones: MutableList<Bone>
+    private val mPaint: Paint = Paint()
     private var mViewSkinned: Boolean = false
-
     /**
      * Initialize method to define properties by attribute, or set it to defaults
      */
@@ -89,24 +88,20 @@ class SkeletonPlaceholderView : FrameLayout {
             val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SkeletonPlaceholderView, defStyleAttr, defStyleRes)
             try {
                 rootBackgroundColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_background_color, defRootBackgroundColor)
-                boneColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color, defBoneColor)
-                boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_width, defBoneDefaultWidth)
-                boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_default_height, defBoneDefaultHeight)
-                boneDefaultCornerRadius = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_corner_radius, defBoneDefaultCornerRadius).toFloat()
+                boneDefaultColor = typedArray.getColor(R.styleable.SkeletonPlaceholderView_sk_bone_color_default, defBoneColor)
+                boneDefaultWidth = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_width_default, defBoneDefaultWidth)
+                boneDefaultHeight = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_height_default, defBoneDefaultHeight)
+                boneDefaultCornerRadius = typedArray.getDimensionPixelSize(R.styleable.SkeletonPlaceholderView_sk_bone_corner_radius_default, defBoneDefaultCornerRadius).toFloat()
             } finally {
                 typedArray.recycle()
             }
         } else {
             rootBackgroundColor = defRootBackgroundColor
-            boneColor = defBoneColor
+            boneDefaultColor = defBoneColor
             boneDefaultWidth = defBoneDefaultWidth
             boneDefaultHeight = defBoneDefaultHeight
             boneDefaultCornerRadius = defBoneDefaultCornerRadius.toFloat()
         }
-
-        mBonePaint = Paint()
-        mBonePaint.color = boneColor
-        setBackgroundColor(rootBackgroundColor)
     }
 
     /**
@@ -121,6 +116,7 @@ class SkeletonPlaceholderView : FrameLayout {
         val view = LayoutInflater.from(context).inflate(layoutRes, this, false)
         addView(view)
         skeletonize(view)
+        setBackgroundColor(rootBackgroundColor)
 
         view.afterMeasured {
             removeView(view)
@@ -142,6 +138,8 @@ class SkeletonPlaceholderView : FrameLayout {
 
     /**
      * Update skeleton size by the assigned view's width & height
+     * @param width the skinned view's measured width
+     * @param height the skinned view's measured height
      */
     private fun updateSkeletonSize(width: Int, height: Int) {
         mViewSkinned = true
@@ -153,6 +151,7 @@ class SkeletonPlaceholderView : FrameLayout {
     /**
      * Skeletonize a View, and its child views if it's an instance of [ViewGroup]
      * Skeletonize here means "cleaning" and update the bones before it's ready to be drawn to the skeleton
+     * @param view the view to be skinned to its skeleton shape
      */
     private fun skeletonize(view: View) {
         view.setBackgroundResource(R.color.transparent)
@@ -195,6 +194,8 @@ class SkeletonPlaceholderView : FrameLayout {
                         // Unhandled type
                     }
                 }
+
+                if(it.color == -1) it.color = boneDefaultColor
                 mBones.updateBone(view.id, it)
             }
         }
@@ -207,18 +208,15 @@ class SkeletonPlaceholderView : FrameLayout {
     }
 
     /**
-     * The actual skeleton shape is called here, after the view is skinned
+     * The actual skeleton shape is drawn here, after the view is skinned
+     * @param canvas the canvas object to draw the skeleton
      */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (mViewSkinned) {
-            mBones.forEach {
-                when (it) {
-                    is CircleBone -> canvas?.drawCircle(it.centerX, it.centerY, it.radius, mBonePaint)
-                    is RectBone -> canvas?.drawRoundRect(it.rect?.createRectF(), it.cornerRadius, it.cornerRadius, mBonePaint)
-                    else -> {
-                        // Unhandled type
-                    }
+            canvas?.let {
+                mBones.forEach {
+                    it.draw(canvas, mPaint)
                 }
             }
         }

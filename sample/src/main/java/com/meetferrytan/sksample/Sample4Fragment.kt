@@ -1,5 +1,6 @@
 package com.meetferrytan.sksample
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +25,9 @@ class Sample4Fragment : Fragment() {
         view.txvLike.text = "1k"
         view.txvReplies.text = "120 Replies"
         view.skeletonPlaceholderView.skinView(R.layout.item_sample_4,
-                CircleBone(R.id.imgProfilePicture),
+                CircleBone.Builder(R.id.imgProfilePicture)
+                        .color(Color.parseColor("#00ff00"))
+                        .build(),
                 RectBone(R.id.txvName),
                 RectBone(R.id.txvLabelAuthor),
                 RectBone(R.id.txvCommentText))

@@ -1,5 +1,6 @@
 package com.meetferrytan.sksample
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ class Sample1Fragment : Fragment() {
                 RectBone(R.id.img),
                 RectBone.Builder(R.id.title)
                         .cornerRadius(resources.getDimensionPixelSize(R.dimen.radius2dp).toFloat())
+                        .color(Color.parseColor("#ff0000"))
                         .build(),
                 RectBone.Builder(R.id.subtitle)
                         .cornerRadius(resources.getDimensionPixelSize(R.dimen.radius4dp).toFloat())

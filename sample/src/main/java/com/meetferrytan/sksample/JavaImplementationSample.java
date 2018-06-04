@@ -1,6 +1,7 @@
 package com.meetferrytan.sksample;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.meetferrytan.skeletonplaceholderview.CircleBone;
 import com.meetferrytan.skeletonplaceholderview.RectBone;
@@ -15,6 +16,7 @@ public class JavaImplementationSample {
     private CircleBone circleBoneByBuilder() {
         return new CircleBone.Builder(R.id.imgCover)
                 .spacing(0)
+                .color(Color.parseColor("#00ff00"))
                 .build();
     }
 
@@ -26,6 +28,7 @@ public class JavaImplementationSample {
         return new RectBone.Builder(R.id.txtGenre)
                 .cornerRadius(4f)
                 .customHeight(200)
+                .color(Color.parseColor("#ff0000"))
                 .customWidth(100)
                 .horizontalSpacing(2)
                 .verticalSpacing(4)
@@ -55,6 +58,7 @@ public class JavaImplementationSample {
                 new CircleBone(R.id.imgCover),
                 new RectBone.Builder(R.id.txtGenre)
                         .customWidth(200)
+                        .color(Color.parseColor("#0000ff"))
                         .customHeight(50)
                         .build());
     }

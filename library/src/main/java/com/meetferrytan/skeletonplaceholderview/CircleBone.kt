@@ -1,5 +1,8 @@
 package com.meetferrytan.skeletonplaceholderview
 
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
 
 /**
@@ -18,11 +21,12 @@ class CircleBone : Bone {
      * @constructor
      */
     private constructor(@IdRes viewId: Int,
-                spacing: Int = 0,
-                centerX: Float = 0f,
-                centerY: Float = 0f,
-                radius: Float = 0f)
-            : super(viewId = viewId, hSpacing = spacing, vSpacing = spacing) {
+                        spacing: Int = 0,
+                        centerX: Float = 0f,
+                        centerY: Float = 0f,
+                        radius: Float = 0f,
+                        @ColorInt color: Int = -1)
+            : super(viewId = viewId, hSpacing = spacing, vSpacing = spacing, color = color) {
         this.centerX = centerX
         this.centerY = centerY
         this.radius = radius
@@ -38,7 +42,8 @@ class CircleBone : Bone {
      */
     private constructor(builder: Builder) : this(
             viewId = builder.viewId,
-            spacing = builder.spacing
+            spacing = builder.spacing,
+            color = builder.color
     )
 
     companion object {
@@ -48,14 +53,22 @@ class CircleBone : Bone {
     /**
      * Builder Pattern for Java interopability
      */
-    class Builder (@IdRes internal val viewId: Int){
+    class Builder(@IdRes internal val viewId: Int) {
 
         internal var spacing: Int = 0
+        @ColorInt
+        internal var color: Int = -1
 
         fun spacing(spacing: Int) = apply { this.spacing = spacing }
+
+        fun color(@ColorInt color: Int) = apply { this.color = color }
 
         fun build() = CircleBone(this)
 
     }
 
+    override fun draw(canvas: Canvas, paint: Paint) {
+        paint.color = color
+        canvas.drawCircle(centerX, centerY, radius, paint)
+    }
 }
