@@ -10,8 +10,8 @@ android {
         applicationId "com.meetferrytan.sksample"
         minSdkVersion 17
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.4"
+        versionCode 5
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
