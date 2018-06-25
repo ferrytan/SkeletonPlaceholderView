@@ -4,20 +4,26 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.RectF
 import android.view.View
-import android.view.ViewTreeObserver
 
 /**
- * Extension function to measure View
- *
- * @param f the function to be run after view measure, apply View's property to [Bone] inside this method
+ * Taken from android-ktx
+ * Performs the given action when this view is next laid out.
  */
-internal inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            if (measuredWidth > 0 && measuredHeight > 0) {
-                viewTreeObserver.removeOnGlobalLayoutListener(this)
-                f()
-            }
+inline fun View.doOnNextLayout(crossinline action: (view: View) -> Unit) {
+    addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+        override fun onLayoutChange(
+                view: View,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+        ) {
+            view.removeOnLayoutChangeListener(this)
+            action(view)
         }
     })
 }
@@ -28,7 +34,7 @@ internal inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
  * @param viewId the viewId of the expected bone
  * @return [Bone] if exist, null if not exist
  */
-internal fun List<Bone>.getBoneById(viewId: Int): Bone? {
+internal fun MutableList<Bone>.getBoneById(viewId: Int): Bone? {
     return run value@{
         forEach {
             when (it.viewId) {viewId -> return@value it
