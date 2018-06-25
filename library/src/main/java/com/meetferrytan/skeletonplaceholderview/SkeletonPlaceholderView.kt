@@ -113,17 +113,19 @@ class SkeletonPlaceholderView : FrameLayout {
     fun <B : Bone> skinView(@LayoutRes layoutRes: Int, vararg bones: B) {
         mViewSkinned = false
         mBones = bones.toMutableList()
-        val view = LayoutInflater.from(context).inflate(layoutRes, this, false)
+        val view = LayoutInflater.from(context).inflate(layoutRes, null, false)
         addView(view)
         skeletonize(view)
         setBackgroundColor(rootBackgroundColor)
 
-        view.afterMeasured {
-            removeView(view)
-            updateSkeletonSize(view.width, view.height)
+        view.doOnNextLayout {
+            val skeletonWidth = it.width
+            val skeletonHeight = it.height
+            removeAllViews()
+            updateSkeletonSize(skeletonWidth, skeletonHeight)
+            mViewSkinned = true
         }
     }
-
     /**
      * Alternative method to skin the boneViewIds.
      * Provides simple [Bone] creation (as [RectBone] for simple usage of this custom view
@@ -142,7 +144,6 @@ class SkeletonPlaceholderView : FrameLayout {
      * @param height the skinned view's measured height
      */
     private fun updateSkeletonSize(width: Int, height: Int) {
-        mViewSkinned = true
         layoutParams.width = width
         layoutParams.height = height
         setLayoutParams(layoutParams)
@@ -164,18 +165,20 @@ class SkeletonPlaceholderView : FrameLayout {
                 view.setLayoutParams(it)
             }
 
-            view.afterMeasured {
+            view.doOnNextLayout {drawnView ->
                 val rect = Rect()
-                view.getGlobalVisibleRect(rect)
+                drawnView.getGlobalVisibleRect(rect)
+
+                // workaround on weird top & bottom rect after calling skinView more than 1 times? confirm later
+                rect.top = drawnView.y.toInt()
+                rect.bottom = rect.top + drawnView.height
 
                 when (it) {
                     is CircleBone -> {
-                        it.centerX = (rect.left + (rect.right - rect.left) / 2).toFloat()
-                        it.centerY = (rect.top + (rect.bottom - rect.top) / 2).toFloat()
+                        it.centerX = rect.centerX().toFloat()
+                        it.centerY = rect.centerY().toFloat()
 
-                        val rectWidth = rect.right - rect.left
-                        val rectHeight = rect.bottom - rect.top
-                        it.radius = minOf(rectWidth, rectHeight).toFloat() / 2 - it.hSpacing
+                        it.radius = minOf(drawnView.width, drawnView.height).toFloat() / 2 - it.hSpacing
                     }
                     is RectBone -> {
 
@@ -195,8 +198,8 @@ class SkeletonPlaceholderView : FrameLayout {
                     }
                 }
 
-                if(it.color == -1) it.color = boneDefaultColor
-                mBones.updateBone(view.id, it)
+                if (it.color == -1) it.color = boneDefaultColor
+                mBones.updateBone(drawnView.id, it)
             }
         }
 
