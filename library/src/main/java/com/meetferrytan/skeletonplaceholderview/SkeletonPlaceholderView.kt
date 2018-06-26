@@ -113,19 +113,23 @@ class SkeletonPlaceholderView : FrameLayout {
     fun <B : Bone> skinView(@LayoutRes layoutRes: Int, vararg bones: B) {
         mViewSkinned = false
         mBones = bones.toMutableList()
-        val view = LayoutInflater.from(context).inflate(layoutRes, null, false)
+        val view = LayoutInflater.from(context).inflate(layoutRes, this, false)
         addView(view)
         skeletonize(view)
         setBackgroundColor(rootBackgroundColor)
-
         view.doOnNextLayout {
             val skeletonWidth = it.width
             val skeletonHeight = it.height
             removeAllViews()
-            updateSkeletonSize(skeletonWidth, skeletonHeight)
+
+            this.updateLayoutParams {
+                width = skeletonWidth
+                height = skeletonHeight
+            }
             mViewSkinned = true
         }
     }
+
     /**
      * Alternative method to skin the boneViewIds.
      * Provides simple [Bone] creation (as [RectBone] for simple usage of this custom view
@@ -136,17 +140,6 @@ class SkeletonPlaceholderView : FrameLayout {
     fun skinView(@LayoutRes layoutRes: Int, @IdRes vararg boneViewIds: Int) {
         val defaultBones: Array<Bone> = boneViewIds.map { RectBone(it) }.toTypedArray()
         skinView(layoutRes, *defaultBones)
-    }
-
-    /**
-     * Update skeleton size by the assigned view's width & height
-     * @param width the skinned view's measured width
-     * @param height the skinned view's measured height
-     */
-    private fun updateSkeletonSize(width: Int, height: Int) {
-        layoutParams.width = width
-        layoutParams.height = height
-        setLayoutParams(layoutParams)
     }
 
     /**
@@ -165,13 +158,11 @@ class SkeletonPlaceholderView : FrameLayout {
                 view.setLayoutParams(it)
             }
 
-            view.doOnNextLayout {drawnView ->
+            view.doOnNextLayout { drawnView ->
                 val rect = Rect()
-                drawnView.getGlobalVisibleRect(rect)
 
-                // workaround on weird top & bottom rect after calling skinView more than 1 times? confirm later
-                rect.top = drawnView.y.toInt()
-                rect.bottom = rect.top + drawnView.height
+                drawnView.getDrawingRect(rect)
+                this.offsetDescendantRectToMyCoords(drawnView, rect)
 
                 when (it) {
                     is CircleBone -> {
