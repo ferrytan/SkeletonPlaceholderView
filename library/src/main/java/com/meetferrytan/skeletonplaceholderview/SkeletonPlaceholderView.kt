@@ -167,11 +167,9 @@ class SkeletonPlaceholderView : FrameLayout {
 
             view.doOnNextLayout {drawnView ->
                 val rect = Rect()
-                drawnView.getGlobalVisibleRect(rect)
 
-                // workaround on weird top & bottom rect after calling skinView more than 1 times? confirm later
-                rect.top = drawnView.y.toInt()
-                rect.bottom = rect.top + drawnView.height
+                drawnView.getDrawingRect(rect)
+                this.offsetDescendantRectToMyCoords(drawnView, rect)
 
                 when (it) {
                     is CircleBone -> {
