@@ -16,9 +16,11 @@ The library is developed using Kotlin, and built for interopability with Java
 
 ## Preview
 
-![SkeletonPlaceholderView](https://raw.githubusercontent.com/ferrytan/SkeletonPlaceholderView/master/preview/preview.gif)
-
 ![SkeletonPlaceholderView](https://raw.githubusercontent.com/ferrytan/SkeletonPlaceholderView/master/preview/preview-2.jpg)
+
+Working sample on [CIAYO Comics](https://https://play.google.com/store/apps/details?id=com.ciayo.comics) Android App:
+
+![SkeletonPlaceholderView](https://raw.githubusercontent.com/ferrytan/SkeletonPlaceholderView/master/preview/preview.gif)
 
 ## Setup
 
