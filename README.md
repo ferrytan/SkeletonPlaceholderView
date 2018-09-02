@@ -1,4 +1,4 @@
-# Skeleton Placeholder View [![Maven Central](https://img.shields.io/maven-central/v/com.github.ferrytan/skeletonplaceholderview.svg?label=Maven%20Central&colorB=blue)](https%3A%2F%2Fsearch.maven.org%2Fsearch%3Fq%3Da%3Askeletonplaceholderview) [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html)  [![license](https://img.shields.io/badge/license-Apache%202-green.svg)](https://github.com/ferrytan/SkeletonPlaceholderView/blob/master/LICENSE.md)
+# Skeleton Placeholder View [![Maven Central](https://img.shields.io/maven-central/v/com.github.ferrytan/skeletonplaceholderview.svg?label=Maven%20Central&colorB=blue)](https://search.maven.org/search?q=a:skeletonplaceholderview) [![platform](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html)  [![license](https://img.shields.io/badge/license-Apache%202-green.svg)](https://github.com/ferrytan/SkeletonPlaceholderView/blob/master/LICENSE.md)
 
 
 ## Overview
@@ -153,6 +153,7 @@ Usage in sample app is improved by using [Facebook](https://github.com/facebook)
 ## Projects/Apps using SkeletonPlaceholderView
 
 - <a href="https://https://play.google.com/store/apps/details?id=com.ciayo.comics">CIAYO Comics</a>
+- <a href="https://https://play.google.com/store/apps/details?id=com.meetferrytan.sksample">Sample App</a>
 
 I'd be happy to know if you're using this library to your app, feel free to contact me and i'll add it to the list
 
