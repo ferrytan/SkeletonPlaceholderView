@@ -18,7 +18,7 @@ The library is developed using Kotlin, and built for interopability with Java
 
 ![SkeletonPlaceholderView](https://raw.githubusercontent.com/ferrytan/SkeletonPlaceholderView/master/preview/preview-2.jpg)
 
-Working sample on [CIAYO Comics](https://https://play.google.com/store/apps/details?id=com.ciayo.comics) Android App:
+Working sample on [CIAYO Comics](https://play.google.com/store/apps/details?id=com.ciayo.comics) Android App:
 
 ![SkeletonPlaceholderView](https://raw.githubusercontent.com/ferrytan/SkeletonPlaceholderView/master/preview/preview.gif)
 
@@ -35,7 +35,7 @@ Working sample on [CIAYO Comics](https://https://play.google.com/store/apps/deta
 > Replace `${latestVersion}` with the latest version code. See [releases](https://github.com/ferrytan/SkeletonPlaceholderView/releases).
 
 ## Sample Usage
-For a working implementation, please have a look at the Sample Project - sample
+For a working implementation, please have a look at the [Sample Project](https://github.com/ferrytan/SkeletonPlaceholderView/tree/master/sample)
 
 1. Add `SkeletonPlaceholderView` to your layout xml:
 ```xml
@@ -152,8 +152,8 @@ Usage in sample app is improved by using [Facebook](https://github.com/facebook)
 
 ## Projects/Apps using SkeletonPlaceholderView
 
-- <a href="https://https://play.google.com/store/apps/details?id=com.ciayo.comics">CIAYO Comics</a>
-- <a href="https://https://play.google.com/store/apps/details?id=com.meetferrytan.sksample">Sample App</a>
+- <a href="https://play.google.com/store/apps/details?id=com.ciayo.comics">CIAYO Comics</a>
+- <a href="https://play.google.com/store/apps/details?id=com.meetferrytan.sksample">Sample App</a>
 
 I'd be happy to know if you're using this library to your app, feel free to contact me and i'll add it to the list
 
