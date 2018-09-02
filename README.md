@@ -156,6 +156,10 @@ Usage in sample app is improved by using [Facebook](https://github.com/facebook)
 
 I'd be happy to know if you're using this library to your app, feel free to contact me and i'll add it to the list
 
+## Thanks
+Special thanks to:
+- [https://github.com/facebook/shimmer-android](https://github.com/facebook/shimmer-android) for the awesome Shimmer in improving the output of this library
+- [https://github.com/android/android-ktx](https://github.com/android/android-ktx) for the useful extensions used in this library
 ## License
 
 ```
