@@ -138,6 +138,8 @@ skeletonPlaceholderView.skinView(R.layout.item_sample_2,
 ```
 See a complete usage in [`sample`](https://github.com/ferrytan/SkeletonPlaceholderView/tree/master/sample) code.
 > Once again, the output of this library STRONGLY DEPENDS on how you write your layout file
+
+Usage in sample app is improved by using [Facebook](https://github.com/facebook)'s great library [shimmer-android](https://github.com/facebook/shimmer-android) for a shimmering effect over the `SkeletonPlaceholderView`
 ## Developed By
 
 **Ferry Irawan**
