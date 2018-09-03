@@ -49,7 +49,7 @@ class RectBone : Bone {
     )
 
     companion object {
-        inline fun build(@IdRes viewId: Int, block: CircleBone.Builder.() -> Unit) = CircleBone.Builder(viewId).apply(block).build()
+        inline fun build(@IdRes viewId: Int, block: Builder.() -> Unit) = Builder(viewId).apply(block).build()
     }
 
     /**
