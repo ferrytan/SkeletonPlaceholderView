@@ -20,7 +20,7 @@ class CircleBone : Bone {
     /**
      * @constructor
      */
-    private constructor(@IdRes viewId: Int,
+    constructor(@IdRes viewId: Int,
                         spacing: Int = 0,
                         centerX: Float = 0f,
                         centerY: Float = 0f,

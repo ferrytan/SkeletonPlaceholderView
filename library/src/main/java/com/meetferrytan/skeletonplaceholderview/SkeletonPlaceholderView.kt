@@ -149,13 +149,13 @@ class SkeletonPlaceholderView : FrameLayout {
      */
     private fun skeletonize(view: View) {
         view.setBackgroundResource(R.color.transparent)
-        val bone = mBones.getBoneById(view.id)
-        bone?.let {
+        val rawBone = mBones.getBoneById(view.id)
+        rawBone?.let { bone ->
             val isWrappedTextView = view is TextView && view.text == "" && view.layoutParams.width == WRAP_CONTENT
 
             if (isWrappedTextView) view.layoutParams.let {
                 it.width = boneDefaultWidth
-                view.setLayoutParams(it)
+                view.layoutParams = it
             }
 
             view.doOnNextLayout { drawnView ->
@@ -164,33 +164,33 @@ class SkeletonPlaceholderView : FrameLayout {
                 drawnView.getDrawingRect(rect)
                 this.offsetDescendantRectToMyCoords(drawnView, rect)
 
-                when (it) {
+                when (bone) {
                     is CircleBone -> {
-                        it.centerX = rect.centerX().toFloat()
-                        it.centerY = rect.centerY().toFloat()
+                        bone.centerX = rect.centerX().toFloat()
+                        bone.centerY = rect.centerY().toFloat()
 
-                        it.radius = minOf(drawnView.width, drawnView.height).toFloat() / 2 - it.hSpacing
+                        bone.radius = minOf(drawnView.width, drawnView.height).toFloat() / 2 - bone.hSpacing
                     }
                     is RectBone -> {
 
-                        if (it.customWidth >= 0) rect.right = rect.left + it.customWidth
-                        if (it.customHeight >= 0) rect.bottom = rect.top + it.customHeight
+                        if (bone.customWidth >= 0) rect.right = rect.left + bone.customWidth
+                        if (bone.customHeight >= 0) rect.bottom = rect.top + bone.customHeight
 
-                        rect.left += it.hSpacing
-                        rect.top += it.vSpacing
-                        rect.right -= it.hSpacing
-                        rect.bottom -= it.vSpacing
+                        rect.left += bone.hSpacing
+                        rect.top += bone.vSpacing
+                        rect.right -= bone.hSpacing
+                        rect.bottom -= bone.vSpacing
 
-                        it.rect = rect
-                        if (it.cornerRadius == -1f) it.cornerRadius = boneDefaultCornerRadius
+                        bone.rect = rect
+                        if (bone.cornerRadius == -1f) bone.cornerRadius = boneDefaultCornerRadius
                     }
                     else -> {
                         // Unhandled type
                     }
                 }
 
-                if (it.color == -1) it.color = boneDefaultColor
-                mBones.updateBone(drawnView.id, it)
+                if (bone.color == -1) bone.color = boneDefaultColor
+                mBones.updateBone(drawnView.id, bone)
             }
         }
 
@@ -209,8 +209,8 @@ class SkeletonPlaceholderView : FrameLayout {
         super.onDraw(canvas)
         if (mViewSkinned) {
             canvas?.let {
-                mBones.forEach {
-                    it.draw(canvas, mPaint)
+                mBones.forEach { bone ->
+                    bone.draw(canvas, mPaint)
                 }
             }
         }
