@@ -19,7 +19,7 @@ class RectBone : Bone {
     /**
      * @constructor
      */
-    private constructor(@IdRes viewId: Int,
+    constructor(@IdRes viewId: Int,
                         customWidth: Int = -1,
                         customHeight: Int = -1,
                         hSpacing: Int = 0,
