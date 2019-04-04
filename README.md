@@ -34,6 +34,9 @@ Working sample on [CIAYO Comics](https://play.google.com/store/apps/details?id=c
 
 > Replace `${latestVersion}` with the latest version code. See [releases](https://github.com/ferrytan/SkeletonPlaceholderView/releases).
 
+SkeletonPlaceholderView 1.1.0 and above only supports projects that have been migrated to [androidx](https://developer.android.com/jetpack/androidx/). For more information, read Google's [migration guide](https://developer.android.com/jetpack/androidx/migrate). 
+Please use version 1.0.2 for projects that are still using the old support library.
+
 ## Sample Usage
 For a working implementation, please have a look at the [Sample Project](https://github.com/ferrytan/SkeletonPlaceholderView/tree/master/sample)
 
