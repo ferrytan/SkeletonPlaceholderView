@@ -6,10 +6,6 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +13,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
+import androidx.core.view.doOnNextLayout
+import androidx.core.view.updateLayoutParams
 
 /**
  * A Library designed to draw a Skeleton by "skinning" the view from a provided layout.

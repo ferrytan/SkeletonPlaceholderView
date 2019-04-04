@@ -3,8 +3,8 @@ package com.meetferrytan.skeletonplaceholderview
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.support.annotation.ColorInt
-import android.support.annotation.IdRes
+import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 
 /**
  * [Bone] with rectangle shape.
